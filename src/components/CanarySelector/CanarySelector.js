@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 //import PropTypes from 'prop-types';
 
-import dataCanarias from './json/canarias.json';
+import { dataCanarias } from './data';
 
 import './CanarySelector.css';
 

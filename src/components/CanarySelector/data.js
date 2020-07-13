@@ -1,4 +1,4 @@
-[
+export const dataCanarias = [
   {
     "key": "tf",
     "label": "Tenerife",
@@ -27,4 +27,4 @@
       [434.5, 398.0],
     ],
   },
-]
+];
