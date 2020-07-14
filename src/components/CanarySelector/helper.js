@@ -28,11 +28,11 @@ export function getZone(event, mapKey) {
   if (mapData && Array.isArray(mapData)) {
     const isImgOriginalSize = event.target.clientWidth === MAP_IMG_WIDTH && event.target.clientHeight === MAP_IMG_HEIGHT;
     const x = isImgOriginalSize ?
-      event.clientX - event.target.offsetLeft :
-      (event.clientX - event.target.offsetLeft) / event.target.clientWidth * MAP_IMG_WIDTH;
+      event.pageX - event.target.offsetLeft :
+      (event.pageX - event.target.offsetLeft) / event.target.clientWidth * MAP_IMG_WIDTH;
     const y = isImgOriginalSize ?
-      event.clientY - event.target.offsetTop :
-      (event.clientY - event.target.offsetTop) / event.target.clientHeight * MAP_IMG_HEIGHT;
+      event.pageY - event.target.offsetTop :
+      (event.pageY - event.target.offsetTop) / event.target.clientHeight * MAP_IMG_HEIGHT;
     for (let i = 0; i < mapData.length; i++) {
       if (polyInside(x, y, mapData[i].poly)) {
         return {
