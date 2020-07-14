@@ -1,26 +1,29 @@
 import React, { Component } from 'react';
 
 import CanarySelector from '../CanarySelector/CanarySelector'
+import { getMapLabel } from '../CanarySelector/helper';
 
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = { zone: '' };
-    this.setZone = this.setZone.bind(this);
+    this.state = { mapKey: '' };
+    this.setMapKey = this.setMapKey.bind(this);
   }
 
-  setZone(zone, close) {
-    this.setState({ zone });
+  setMapKey(mapKey, close) {
+    this.setState({ mapKey });
   }
 
   render() {
+    const label = getMapLabel(this.state.mapKey);
+
     return(
       <div>
         <CanarySelector
           forceSubZone={false}
-          setZone={this.setZone}
+          setMapKey={this.setMapKey}
         />
-        <div style={{textAlign: 'center', color: 'red'}}><i>{this.state.zone}</i></div>
+        <div style={{textAlign: 'center', color: 'red'}}><i>{label}</i></div>
       </div>
     );
   };

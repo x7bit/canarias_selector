@@ -2,7 +2,6 @@ export const data = {
   canarias: [
     {
       key: 'tf',
-      label: 'Tenerife',
       hasMap: true,
       poly: [
         [222.0, 271.0],
@@ -18,7 +17,6 @@ export const data = {
     },
     {
       key: 'gc',
-      label: 'Gran Canaria',
       hasMap: true,
       poly: [
         [428.5, 348.0],
@@ -32,7 +30,6 @@ export const data = {
     },
     {
       key: 'fv',
-      label: 'Fuerteventura',
       hasMap: false,
       poly: [
         [683.5, 347.5],
@@ -56,7 +53,6 @@ export const data = {
     },
     {
       key: 'lz',
-      label: 'Lanzarote',
       hasMap: false,
       poly: [
         [794.0, 179.0],
@@ -81,7 +77,6 @@ export const data = {
     },
     {
       key: 'pm',
-      label: 'La Palma',
       hasMap: false,
       poly: [
         [78.5, 270.5],
@@ -97,7 +92,6 @@ export const data = {
     },
     {
       key: 'gm',
-      label: 'La Gomera',
       hasMap: false,
       poly: [
         [180.0, 356.5],
@@ -113,7 +107,6 @@ export const data = {
     },
     {
       key: 'hr',
-      label: 'El Hierro',
       hasMap: false,
       poly: [
         [56.5, 435.0],
@@ -132,8 +125,7 @@ export const data = {
   ],
   tf: [
     {
-      key: 'tf.metro',
-      label: 'Tenerife Zona Metropolitana',
+      key: 'tf_metro',
       hasMap: false,
       poly: [
         [537.5, 131.0],
@@ -160,8 +152,7 @@ export const data = {
       ],
     },
     {
-      key: 'tf.norte',
-      label: 'Tenerife Norte',
+      key: 'tf_norte',
       hasMap: false,
       poly: [
         [537.5, 131.0],
@@ -182,8 +173,7 @@ export const data = {
       ],
     },
     {
-      key: 'tf.sur',
-      label: 'Tenerife Sur',
+      key: 'tf_sur',
       hasMap: false,
       poly: [
         [537.5, 131.0],
