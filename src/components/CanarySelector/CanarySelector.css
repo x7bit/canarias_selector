@@ -1,3 +1,15 @@
+.map-container {
+  position: relative;
+  text-align: center;
+}
+
+.map-label {
+  position: absolute;
+  top: 5%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
 .responsive-img {
   width: 100%;
   max-width: 900px;

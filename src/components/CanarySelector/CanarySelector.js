@@ -1,17 +1,22 @@
 import React, { Component } from 'react';
-//import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 
-import { dataCanarias } from './data';
+import { data } from './data';
 
 import './CanarySelector.css';
 
 class CanarySelector extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      map: 'canarias',
+      label: '',
+    };
+    this.handleMove = this.handleMove.bind(this);
     this.handleClick = this.handleClick.bind(this);
   }
 
-  polyInside(x, y, poly) {
+  _polyInside(x, y, poly) {
     let isInside = false;
     for (let i = 0, j = poly.length - 1; i < poly.length; j = i++) {
         let xi = poly[i][0], yi = poly[i][1];
@@ -25,44 +30,68 @@ class CanarySelector extends Component {
     return isInside;
   }
 
+  _getZone(event, data) {
+    if (data && Array.isArray(data)) {
+      const isImgOriginalSize = event.target.clientWidth === 900 && event.target.clientHeight === 500;
+      const x = isImgOriginalSize ?
+        event.clientX - event.target.offsetLeft :
+        (event.clientX - event.target.offsetLeft) / event.target.clientWidth * 900;
+      const y = isImgOriginalSize ?
+        event.clientY - event.target.offsetTop :
+        (event.clientY - event.target.offsetTop) / event.target.clientHeight * 500;
+      for (let i = 0; i < data.length; i++) {
+        if (this._polyInside(x, y, data[i].poly)) {
+          return {
+            key: data[i].key,
+            label: data[i].label,
+            hasMap: data[i].hasMap,
+          };
+        }
+      }
+    }
+    return null;
+  }
+
+  handleMove(event) {
+    const zone = this._getZone(event, data[this.state.map]);
+    const newLabel = (zone === null) ? '' : zone.label;
+    if (newLabel !== this.state.label) {
+      this.setState({ label: newLabel });
+    }
+  }
+
   handleClick(event) {
-    const isImgOriginalSize = event.target.clientWidth === 900 && event.target.clientHeight === 500;
-    const x = isImgOriginalSize ?
-      event.clientX - event.target.offsetLeft :
-      (event.clientX - event.target.offsetLeft) / event.target.clientWidth * 900;
-    const y = isImgOriginalSize ?
-      event.clientY - event.target.offsetTop :
-      (event.clientY - event.target.offsetTop) / event.target.clientHeight * 500;
-    for (let i = 0; i < dataCanarias.length; i++) {
-      const subData = dataCanarias[i];
-      if (this.polyInside(x, y, subData.poly)) {
-        console.log(subData.label);
-        break;
+    const zone = this._getZone(event, data[this.state.map]);
+    const hasMap = (zone === null) ? false : zone.hasMap;
+    const newMap = (zone === null) ? 'canarias' : zone.key;
+    if (newMap !== this.state.map) {
+      if (newMap === 'canarias') {
+        this.setState({ map: newMap, label: '' });
+        this.props.setZone('');
+      } else if (this.state.map === 'canarias' && hasMap) {
+        this.setState( {map: newMap, label: '' });
+        this.props.setZone(newMap);
+      } else {
+        this.props.setZone(newMap);
       }
     }
   }
 
   render() {
-    const url = process.env.PUBLIC_URL + '/img/canarias.png';  //TODO: llevarlo a una función
+    const { map, label } = this.state;
+    const url = `${process.env.PUBLIC_URL}/img/${map}.png`;
 
     return(
-      <div>
-        <img className="responsive-img" src={url} alt="Canarias" onClick={this.handleClick} />
+      <div className="map-container">
+        <div className="map-label">{label}</div>
+        <img className="responsive-img" src={url} alt="Canarias" onClick={this.handleClick} onMouseMove={this.handleMove} />
       </div>
     );
   };
 }
 
-/*
-App.propTypes = {
-  userId: PropTypes.number.isRequired,
-  actions: PropTypes.object,
-  view: PropTypes.string.isRequired,
-  customer: PropTypes.object,
-  categories: PropTypes.arrayOf(PropTypes.object),
-  brands: PropTypes.arrayOf(PropTypes.object),
-  sorts: PropTypes.arrayOf(PropTypes.string),
+CanarySelector.propTypes = {
+  setZone: PropTypes.func.isRequired,
 };
-*/
 
 export default CanarySelector;
