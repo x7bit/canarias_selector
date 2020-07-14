@@ -67,12 +67,14 @@ class CanarySelector extends Component {
     if (newMap !== this.state.map) {
       if (newMap === 'canarias') {
         this.setState({ map: newMap, label: '' });
-        this.props.setZone('');
+        this.props.setZone('', false);
       } else if (this.state.map === 'canarias' && hasMap) {
         this.setState( {map: newMap, label: '' });
-        this.props.setZone(newMap);
+        if (!this.props.forceSubZone) {
+          this.props.setZone(newMap, false);
+        }
       } else {
-        this.props.setZone(newMap);
+        this.props.setZone(newMap, true);
       }
     }
   }
@@ -83,7 +85,7 @@ class CanarySelector extends Component {
 
     return(
       <div className="map-container">
-        <div className="map-label">{label}</div>
+        <div className="map-label"><strong>{label}</strong></div>
         <img className="responsive-img" src={url} alt="Canarias" onClick={this.handleClick} onMouseMove={this.handleMove} />
       </div>
     );
@@ -91,7 +93,8 @@ class CanarySelector extends Component {
 }
 
 CanarySelector.propTypes = {
-  setZone: PropTypes.func.isRequired,
+  forceSubZone: PropTypes.bool.isRequired,
+  setZone: PropTypes.func.isRequired,  // setZone(zone, close) { ... }
 };
 
 export default CanarySelector;

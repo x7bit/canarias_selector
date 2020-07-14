@@ -9,15 +9,18 @@ class App extends Component {
     this.setZone = this.setZone.bind(this);
   }
 
-  setZone(zone) {
+  setZone(zone, close) {
     this.setState({ zone });
   }
 
   render() {
     return(
       <div>
-        <CanarySelector setZone={this.setZone} />
-        <div style={{textAlign: 'center'}}>{this.state.zone}</div>
+        <CanarySelector
+          forceSubZone={false}
+          setZone={this.setZone}
+        />
+        <div style={{textAlign: 'center', color: 'red'}}><i>{this.state.zone}</i></div>
       </div>
     );
   };
