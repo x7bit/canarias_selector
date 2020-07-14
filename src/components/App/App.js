@@ -23,7 +23,7 @@ class App extends Component {
           forceSubZone={false}
           setMapKey={this.setMapKey}
         />
-        <div style={{textAlign: 'center', color: 'red'}}><i>{label}</i></div>
+        <div style={{textAlign: 'center', color: 'Tomato', minHeight: '25px'}}><i>{label}</i></div>
       </div>
     );
   };
