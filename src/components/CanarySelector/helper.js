@@ -1,12 +1,13 @@
 import { data } from './data';
 import { MAP_IMG_WIDTH, MAP_IMG_HEIGHT, MAP_LABELS } from '../constants';
 
-export function getMapLabel(mapKey) {
+export function getMapLabel(mapKey, t) {
+  const label = (MAP_LABELS[mapKey] === 't') ? t(mapKey) : MAP_LABELS[mapKey];
   if (mapKey.includes('_')) {
     const mapKeyParts = mapKey.split('_');
-    return `${MAP_LABELS[mapKeyParts[0]]} · ${MAP_LABELS[mapKey]}`;
+    return `${MAP_LABELS[mapKeyParts[0]]} · ${label}`;
   }
-  return MAP_LABELS[mapKey];
+  return label;
 }
 
 export function polyInside(x, y, poly) {
@@ -23,7 +24,7 @@ export function polyInside(x, y, poly) {
   return isInside;
 }
 
-export function getZone(event, mapKey) {
+export function getZone(event, mapKey, t) {
   const mapData = data[mapKey];
   if (mapData && Array.isArray(mapData)) {
     const isImgOriginalSize = event.target.clientWidth === MAP_IMG_WIDTH && event.target.clientHeight === MAP_IMG_HEIGHT;
@@ -37,7 +38,7 @@ export function getZone(event, mapKey) {
       if (polyInside(x, y, mapData[i].poly)) {
         return {
           key: mapData[i].key,
-          label: MAP_LABELS[mapData[i].key],
+          label: (MAP_LABELS[mapData[i].key] === 't') ? t(mapData[i].key) : MAP_LABELS[mapData[i].key],
           hasMap: mapData[i].hasMap,
         };
       }

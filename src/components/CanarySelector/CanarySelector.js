@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { withTranslation } from 'react-i18next';
 
 import { getZone } from './helper';
 import './CanarySelector.css';
@@ -16,7 +17,7 @@ class CanarySelector extends Component {
   }
 
   handleMove(event) {
-    const zone = getZone(event, this.state.mapKey);
+    const zone = getZone(event, this.state.mapKey, this.props.t);
     const newMapLabel = (zone === null) ? '' : zone.label;
     if (newMapLabel !== this.state.mapLabel) {
       this.setState({ mapLabel: newMapLabel });
@@ -24,7 +25,7 @@ class CanarySelector extends Component {
   }
 
   handleClick(event) {
-    const zone = getZone(event, this.state.mapKey);
+    const zone = getZone(event, this.state.mapKey, this.props.t);
     const hasMap = (zone === null) ? false : zone.hasMap;
     const newMapKey = (zone === null) ? 'canarias' : zone.key;
     if (newMapKey !== this.state.mapKey) {
@@ -56,8 +57,9 @@ class CanarySelector extends Component {
 }
 
 CanarySelector.propTypes = {
+  t: PropTypes.func.isRequired,
   forceSubZone: PropTypes.bool.isRequired,
   setMapKey: PropTypes.func.isRequired,  // setMapKey(mapKey, close) { ... }
 };
 
-export default CanarySelector;
+export default withTranslation('translations')(CanarySelector);

@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { withTranslation } from 'react-i18next';
 
 import CanarySelector from '../CanarySelector/CanarySelector'
 import { getMapLabel } from '../CanarySelector/helper';
@@ -10,12 +12,17 @@ class App extends Component {
     this.setMapKey = this.setMapKey.bind(this);
   }
 
+  componentDidMount() {
+    const userLanguage = navigator.language || navigator.userLanguage;
+    this.props.i18n.changeLanguage(userLanguage.split('-')[0]);
+  }
+
   setMapKey(mapKey, close) {
     this.setState({ mapKey });
   }
 
   render() {
-    const label = getMapLabel(this.state.mapKey);
+    const label = getMapLabel(this.state.mapKey, this.props.t);
 
     return(
       <div>
@@ -29,4 +36,9 @@ class App extends Component {
   };
 }
 
-export default App;
+App.propTypes = {
+  t: PropTypes.func.isRequired,
+  i18n: PropTypes.object.isRequired,
+};
+
+export default withTranslation('translations')(App);
