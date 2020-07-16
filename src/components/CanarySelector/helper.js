@@ -1,5 +1,5 @@
 import { data } from './data';
-import { MAP_IMG_WIDTH, MAP_IMG_HEIGHT, MAP_LABELS } from '../constants';
+import { MAP_LABELS } from '../constants';
 
 export function getMapLabel(mapKey, t) {
   const label = (MAP_LABELS[mapKey] === 't') ? t(mapKey) : MAP_LABELS[mapKey];
@@ -27,13 +27,16 @@ export function polyInside(x, y, poly) {
 export function getZone(event, mapKey, t) {
   const mapData = data[mapKey];
   if (mapData && Array.isArray(mapData)) {
-    const isImgOriginalSize = event.target.clientWidth === MAP_IMG_WIDTH && event.target.clientHeight === MAP_IMG_HEIGHT;
+    const imgRect = event.target.getBoundingClientRect();
+    const originalHeight = event.target.naturalHeight;
+    const originalWidth = event.target.naturalWidth;
+    const isImgOriginalSize = imgRect.width === originalWidth && imgRect.height === originalHeight;
     const x = isImgOriginalSize ?
-      event.pageX - event.target.offsetLeft :
-      (event.pageX - event.target.offsetLeft) / event.target.clientWidth * MAP_IMG_WIDTH;
+      event.pageX - imgRect.left :
+      (event.pageX - imgRect.left) / imgRect.width * originalWidth;
     const y = isImgOriginalSize ?
-      event.pageY - event.target.offsetTop :
-      (event.pageY - event.target.offsetTop) / event.target.clientHeight * MAP_IMG_HEIGHT;
+      event.pageY - imgRect.top :
+      (event.pageY - imgRect.top) / imgRect.height * originalHeight;
     for (let i = 0; i < mapData.length; i++) {
       if (polyInside(x, y, mapData[i].poly)) {
         return {

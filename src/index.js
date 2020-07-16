@@ -10,9 +10,7 @@ import './index.css';
 
 ReactDOM.render(
   <I18nextProvider i18n={i18n}>
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>
+    <App />
   </I18nextProvider>,
   document.getElementById('root')
 );

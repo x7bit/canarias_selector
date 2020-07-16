@@ -1,5 +1,3 @@
-export const MAP_IMG_WIDTH = 900;
-export const MAP_IMG_HEIGHT = 500;
 export const MAP_LABELS = {
   tf: 'Tenerife',
   tf_metro: 't',
